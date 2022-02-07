@@ -1,0 +1,58 @@
+<html>
+	<head>
+		<title>TikAPI OAuth Demo</title>
+		<style>
+			body{
+				font-family: Roboto;
+			}
+			button {
+				padding: 15px;
+				background: black;
+				color: #fff;
+				border: none;
+				border-radius: 0.25rem;
+				cursor: pointer;
+				margin: 20px 0;
+			}
+			img {
+				width: 100px;
+				border-radius: 50%;
+			}
+			h2 {
+				color: green;
+			}
+		</style>
+	</head>
+	
+	<body>
+		<center>
+			<div class="auth">
+				<button type="button" class="connect">Connect with TikTok</button>
+			</div>
+			<div class="done" style="display: none;">
+				<img src=''></img>
+				<h2></h2>
+			</div>
+		</center>
+		<script src="https://www.tikapi.io/assets/js/sdk.js"></script>
+
+		<script>
+			document.querySelector(".connect").onclick = function(){
+				TikApi.oauth({
+					client_id: "c_1234567890", //Add your client_id here
+					
+				});
+			}
+			TikApi.onLogin(function(data){
+				console.log(data);
+				if(data.type == "success"){
+					document.querySelector(".auth").style.display = "none";
+					document.querySelector(".done img").src = data.userInfo.avatar;
+					document.querySelector(".done h2").innerText = `${data.userInfo.username} connected successfully!`;
+					document.querySelector(".done").style.display = "block";
+				}
+			});
+			
+		</script>
+	</body>
+</html>
